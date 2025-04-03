@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}"
+      lang="en"><html lang="en">
+
+<div layout:fragment="content">
+    <div class="row-content">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><h3>게시글 수정</h3></div>
+                <br>
+                <form id="form1" action="/board/modify" method="post">
+                    <input type="hidden" name="bno" th:value="${board.bno}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea class="form-control" name="content" id="content" rows="3">[[${board.content}]]</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author</label>
+                        <input type="text" class="form-control" name="author" id="author" th:value="${board.author}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modify</button>
+                    <button type="button" class="btn btn-danger">Remove</button>
+                    <button type="button" class="btn btn-secondary">To List</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+    const formObj = document.querySelector("#form1");
+
+    document.querySelector(".btn-danger").addEventListener("click", function(e) {
+        e.preventDefault();
+        formObj.action = `/board/remove`;
+        formObj.method = "post";
+        formObj.submit();
+    }, false)
+
+    document.querySelector(".btn-secondary").addEventListener("click", function(e) {
+        e.preventDefault();
+        self.location = "/board/list";
+    }, false)
+</script>

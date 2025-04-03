@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.thymeleafex.mapper.BoardMapper">
+    <select id="selectAll" resultType="BoardDTO">
+        SELECT * FROM tbl_board ORDER BY bno DESC
+    </select>
+
+    <insert id="insert" >
+        INSERT INTO tbl_board(title, content, author)
+        VALUES(#{title}, #{content}, #{author})
+    </insert>
+
+    <select id="selectByBno" resultType="BoardDTO">
+        SELECT * FROM tbl_board WHERE bno = #{bno}
+    </select>
+
+    <delete id="deleteByBno">
+        DELETE FROM tbl_Board WHERE bno = #{bno}
+    </delete>
+
+    <update id="update">
+        UPDATE tbl_board
+        SET title = #{title}, content = #{content}, author = #{author}
+        WHERE bno = #{bno}
+    </update>
+
+    <update id="updateReadCount">
+        UPDATE tbl_board
+        SET readcount = readcount + 1
+        WHERE bno = #{bno}
+    </update>
+</mapper>

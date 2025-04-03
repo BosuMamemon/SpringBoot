@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h1 th:text="${msg}"></h1>
+        <h1>[[${msg}]]</h1>
+
+<!--/*  타임리프 주석처리(파싱 X) */-->
+<!--    html 주석처리(파싱 O) -->
+
+        <div th:with="num1=${10}, num2=${20}, num3=${30}">
+            <h4 th:text="${num1+num2+num3}"></h4>
+            <h4>[[${num1+num2+num3}]]</h4>
+<!--            if -> 제어문의 값이 참이면 이행-->
+            <span th:if="${num1>num2}">[[${num1}]]</span>
+<!--            unless -> 제어문의 값이 거짓이면 이행-->
+            <span th:unless="${num1>num2}">[[${num2}]]</span>
+        </div>
+    </body>
+</html>

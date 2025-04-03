@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        [[${names}]]
+        <ul>
+            <th:block th:each="name:${names}">
+                <li>[[${name}]], [[${age}]]</li>
+            </th:block>
+        </ul>
+    </body>
+</html>

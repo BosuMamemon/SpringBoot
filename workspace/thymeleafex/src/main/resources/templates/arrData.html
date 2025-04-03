@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <body>
+    <h1 th:text="${list}"></h1>
+    <hr>
+    <h1>[[${list}]]</h1>
+
+    <ul>
+      <li th:each="str:${list}">
+        <span th:text="${str}"></span>
+        <span>[[${str}]]</span>
+      </li>
+    </ul>
+
+    <ul>
+      <th:block th:each="str:${list}">
+        <li>[[${str}]]</li>
+      </th:block>
+    </ul>
+
+    <ul>
+      <th:block th:each="str, status:${list}">
+        <li th:if="status.odd">[[${str}]] -- ODD</li>
+        <li th:unless="status.odd">[[${str}]] -- EVEN</li>
+      </th:block>
+    </ul>
+
+    <ul>
+      <th:block th:each="str, status:${list}">
+        <li>[[${status.index}]] - [[${str}]]</li>
+        <li>[[${status.count}]] - [[${str}]]</li>
+      </th:block>
+    </ul>
+  </body>
+</html>
