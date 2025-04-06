@@ -47,6 +47,11 @@ dependencies {
 // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
 //    스프링부트 3.0 이상부터는 아래가 필요하다고 함
     implementation 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+//    JPA 그래들
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+    implementation "org.springframework.data:spring-data-jpa:4.0.0-M1"
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.4.4'
 }
 
 tasks.named('test') {
