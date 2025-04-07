@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}"
+      lang="en"><html lang="en">
+
+<div layout:fragment="content">
+    <div class="row-content">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title"><h3>게시글 수정</h3></div>
+                <br>
+                <form id="form1" action="/board/modify" method="post">
+                    <input type="hidden" name="bno" th:value="${board.bno}">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control" name="author" id="author" th:value="${board.author}" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">제목</span>
+                        <input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <textarea class="form-control" name="content" id="content" rows="3">[[${board.content}]]</textarea>
+                    </div>
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-primary">수정</button>
+                        <button type="button" class="btn btn-secondary">목록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+    document.querySelector(".btn-secondary").addEventListener("click", function(e) {
+        e.preventDefault();
+        self.location = "/board/list";
+    }, false)
+</script>

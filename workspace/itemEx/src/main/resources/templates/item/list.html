@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/basic.html}"
+        lang="en">
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h3>Item List</h3></div>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">STOCK NUMBER</th>
+                        <th scope="col">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="item:${itemList}">
+                        <tr>
+                            <td>[[${item.id}]]</td>
+                            <td>[[${item.name}]]</td>
+                            <td>[[${item.price}]]</td>
+                            <td>[[${item.stockNumber}]]</td>
+                            <td>[[${item.itemSellStatus}]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+            <a th:href="@{/item/register}"><button type="button" class="btn btn-outline-primary">Register</button></a>
+        </div>
+    </div>
+</div>

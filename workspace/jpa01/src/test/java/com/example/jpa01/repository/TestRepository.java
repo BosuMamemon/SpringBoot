@@ -1,5 +1,6 @@
 package com.example.jpa01.repository;
 
+import com.example.jpa01.domain.Board;
 import com.example.jpa01.domain.Item;
 import com.example.jpa01.domain.ItemSellStatus;
 import com.example.jpa01.domain.Member;
@@ -22,6 +23,26 @@ public class TestRepository {
     private MemberRepository memberRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Test
+    public void testFindByName() {
+        Member member = memberRepository.findByName("admin");
+        log.info(member);
+    }
+
+    @Test
+    public void testFindByEmail() {
+        Member member = memberRepository.findByEmail("zxczxc");
+        log.info(member);
+    }
+
+    @Test
+    public void testQueryExample() {
+        Member member = memberRepository.queryExample("zxczxc");
+        log.info(member);
+    }
 
     @Test
     public void testDatasource() throws SQLException {
@@ -32,10 +53,10 @@ public class TestRepository {
     @Test
     public void testMemberInsert() throws SQLException {
         Member member = new Member();
-        member.setAddress("zxczxc");
-        member.setName("zxczxc");
-        member.setPassword("zxczxc");
-        member.setEmail("zxczxc");
+        member.setAddress("admin");
+        member.setName("admin");
+        member.setPassword("admin");
+        member.setEmail("admin");
         memberRepository.save(member);
     }
 
@@ -97,5 +118,14 @@ public class TestRepository {
         Item item = itemRepository.findById(1L).get();
         item.setItemName("사과사과");
         itemRepository.save(item);
+    }
+
+    @Test
+    public void TestBoardInsert() {
+        Board board = new Board();
+        board.setTitle("test");
+        board.setContent("test");
+        board.setAuthor("test");
+        boardRepository.save(board);
     }
 }

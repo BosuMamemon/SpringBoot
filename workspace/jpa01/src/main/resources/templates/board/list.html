@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}"
+      lang="en">
+
+<div layout:fragment="content">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title"><h3>게시판 목록</h3></div>
+      <br>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Bno</th>
+            <th scope="col">Author</th>
+            <th scope="col">Title</th>
+            <th scope="col">RegDate</th>
+            <th scope="col">UpdateDate</th>
+            <th scope="col">ReadCount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="board:${bList}">
+            <td>[[${board.bno}]]</td>
+            <td>[[${board.author}]]</td>
+            <td><a th:href="@{/board/read(bno=${board.bno})}" style="text-decoration: none; font-weight: bold">[[${board.title}]]</a></td>
+            <td>[[${board.regdate}]]</td>
+            <td>[[${board.updatedate}]]</td>
+            <td>[[${board.readcount}]]</td>
+          </tr>
+        </tbody>
+      </table>
+      <a th:href="@{/board/register}"><button type="button" class="btn btn-primary">게시글 등록</button></a>
+    </div>
+  </div>
+</div>
