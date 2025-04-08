@@ -6,7 +6,7 @@
 
     <div layout:fragment="content">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" th:with="link=${pageRequestDTO.getLink()}">
                 <div class="card-title"><h3>게시글 등록</h3></div>
                 <br>
                 <form action="/board/register" method="post">

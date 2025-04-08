@@ -2,6 +2,8 @@ package com.example.jpa01.service;
 
 import com.example.jpa01.domain.Board;
 import com.example.jpa01.dto.BoardDTO;
+import com.example.jpa01.dto.PageRequestDTO;
+import com.example.jpa01.dto.PageResponseDTO;
 
 import java.util.List;
 
@@ -10,7 +12,8 @@ public interface BoardService {
     BoardDTO readBoard(Long bno);
     void updateBoard(BoardDTO board);
     void deleteBoard(Long bno);
-    List<BoardDTO> readAllBoards();
+//    List<BoardDTO> readAllBoards();
+    PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO);
 
 //    default method
     default Board dtoToEntity(BoardDTO boardDTO) {

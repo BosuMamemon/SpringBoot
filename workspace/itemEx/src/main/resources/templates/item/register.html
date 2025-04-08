@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout.html}"
+        lang="en">
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h3>Item Register</h3></div>
+            <br>
+            <form action="/item/register" method="post">
+                <div class="input-group">
+                    <span class="input-group-text">Name</span>
+                    <input type="text" class="form-control" name="name" placeholder="Name goes here.">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Price</span>
+                    <input type="number" class="form-control" name="price" placeholder="Price goes here.">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Stock</span>
+                    <input type="number" class="form-control" name="stockNumber" placeholder="Stock count goes here.">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Item Detail</span>
+                    <textarea class="form-control" name="itemDetail" placeholder="Detail goes here."></textarea>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Item Status</span>
+                    <select name="itemSellStatus">
+                        <th:block th:each="status:${itemSellStatus}"
+                        <option th:value="${status.name()}"></option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                    <a th:href="@{/item/list}"><button type="button" class="btn btn-outline-secondary">To List</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

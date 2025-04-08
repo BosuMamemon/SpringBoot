@@ -2,6 +2,8 @@ package com.example.jpa01.controller;
 
 import com.example.jpa01.domain.Board;
 import com.example.jpa01.dto.BoardDTO;
+import com.example.jpa01.dto.PageRequestDTO;
+import com.example.jpa01.dto.PageResponseDTO;
 import com.example.jpa01.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,13 +24,18 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public void getList(Model model) {
-        List<BoardDTO> bList = boardService.readAllBoards();
-        model.addAttribute("bList", bList);
+    public void getList(PageRequestDTO pageRequestDTO, Model model) {
+//        List<BoardDTO> bList = boardService.readAllBoards();
+//        model.addAttribute("bList", bList);
+        PageResponseDTO pageResponseDTO = boardService.list(pageRequestDTO);
+        model.addAttribute("requestDTO", pageRequestDTO);
+        model.addAttribute("responseDTO", pageResponseDTO);
     }
 
     @GetMapping("/register")
-    public void getRegister() {}
+    public void getRegister(PageRequestDTO pageRequestDTO, Model model) {
+        model.addAttribute("requestDTO", pageRequestDTO);
+    }
 
     @PostMapping("/register")
     public String postRegister(BoardDTO boardDTO) {
@@ -37,8 +44,9 @@ public class BoardController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void getRead(@RequestParam("bno") Long bno, Model model) {
+    public void getRead(@RequestParam("bno") Long bno, PageRequestDTO pageRequestDTO, Model model) {
         BoardDTO boardDTO = boardService.readBoard(bno);
+        model.addAttribute("requestDTO", pageRequestDTO);
         model.addAttribute("board", boardDTO);
     }
 

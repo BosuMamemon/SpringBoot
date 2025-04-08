@@ -2,9 +2,13 @@ package com.example.jpa01.service;
 
 import com.example.jpa01.domain.Board;
 import com.example.jpa01.dto.BoardDTO;
+import com.example.jpa01.dto.PageRequestDTO;
+import com.example.jpa01.dto.PageResponseDTO;
 import com.example.jpa01.repository.BoardRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,9 +48,14 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> readAllBoards() {
-        List<Board> boards = boardRepository.findAll();
-        List<BoardDTO> boardDTOs = boards.stream().map(board -> entityToDto(board)).collect(Collectors.toList());
-        return boardDTOs;
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+        Page<Board> result = boardRepository.searchTitle(pageRequestDTO.getKeyword(), pageable);
+        List<BoardDTO> dtoList = result.getContent().stream().map(board -> entityToDto(board)).collect(Collectors.toList());
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
     }
 }
