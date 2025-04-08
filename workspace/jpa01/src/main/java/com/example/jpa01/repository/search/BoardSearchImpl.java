@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch {
-    public BoardSearchImpl(Class<?> domainClass) {
-        super(domainClass);
+    public BoardSearchImpl() {
+        super(Board.class);
     }
 
     @Override

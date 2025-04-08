@@ -7,26 +7,29 @@
 <div layout:fragment="content">
     <div class="card">
         <div class="card-body">
-            <div class="card-title"><h3>Item List</h3></div>
-            <br>
+            <div class="card-title mb-3"><h3>Item List</h3></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">NAME</th>
                         <th scope="col">PRICE</th>
-                        <th scope="col">STOCK NUMBER</th>
+                        <th scope="col">STOCK COUNT</th>
                         <th scope="col">STATUS</th>
+                        <th scope="col">REGDATE</th>
+                        <th scope="col">MODDATE</th>
                     </tr>
                 </thead>
                 <tbody>
                     <th:block th:each="item:${itemList}">
                         <tr>
                             <td>[[${item.id}]]</td>
-                            <td>[[${item.name}]]</td>
+                            <td><a th:href="@{/item/read(id=${item.id})}">[[${item.name}]]</a></td>
                             <td>[[${item.price}]]</td>
                             <td>[[${item.stockNumber}]]</td>
                             <td>[[${item.itemSellStatus}]]</td>
+                            <td>[[${item.regdate}]]</td>
+                            <td>[[${item.updatedate}]]</td>
                         </tr>
                     </th:block>
                 </tbody>

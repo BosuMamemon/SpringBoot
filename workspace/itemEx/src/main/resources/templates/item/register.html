@@ -7,8 +7,7 @@
 <div layout:fragment="content">
     <div class="card">
         <div class="card-body">
-            <div class="card-title"><h3>Item Register</h3></div>
-            <br>
+            <div class="card-title mb-3"><h3>Item Register</h3></div>
             <form action="/item/register" method="post">
                 <div class="input-group">
                     <span class="input-group-text">Name</span>
@@ -28,9 +27,11 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-text">Item Status</span>
-                    <select name="itemSellStatus">
-                        <th:block th:each="status:${itemSellStatus}"
-                        <option th:value="${status.name()}"></option>
+                    <select class="form-control" name="itemSellStatus">
+                        <option value="">---</option>
+                        <option value="판매중">판매중</option>
+                        <option value="판매완료">판매완료</option>
+                        <option value="입고대기">입고대기</option>
                     </select>
                 </div>
                 <br>

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +23,27 @@ public class ItemController {
     @GetMapping("/list")
     public void getList(Model model) {
         List<ItemDTO> itemList = itemService.listItem();
-        List<ItemSellStatus> itemSellStatus = Arrays.stream(ItemSellStatus.values()).toList();
         model.addAttribute("itemList", itemList);
-        model.addAttribute("itemSellStatus", itemSellStatus);
     }
 
     @GetMapping("/register")
     public void getRegister() {}
+
+    @PostMapping("/register")
+    public String postRegister(ItemDTO itemDTO) {
+        itemService.registerItem(itemDTO);
+        return "redirect:/item/list";
+    }
+
+    @GetMapping("/read")
+    public void getRead(@RequestParam("id") Long id, Model model) {
+        ItemDTO itemDTO = itemService.readItem(id);
+        model.addAttribute("itemDTO", itemDTO);
+    }
+
+    @GetMapping("/delete")
+    public String getDelete(@RequestParam("id") Long id) {
+        itemService.deleteItem(id);
+        return "redirect:/item/list";
+    }
 }
