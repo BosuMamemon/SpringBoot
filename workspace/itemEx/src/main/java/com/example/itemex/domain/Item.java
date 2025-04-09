@@ -30,4 +30,12 @@ public class Item extends baseEntity {
     private String itemDetail;
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;
+
+    public void update(String name, int price, int stockNumber, String itemDetail, ItemSellStatus itemSellStatus) {
+        this.name = name;
+        this.price = price;
+        this.stockNumber = stockNumber;
+        this.itemDetail = itemDetail;
+        this.itemSellStatus = itemSellStatus;
+    }
 }

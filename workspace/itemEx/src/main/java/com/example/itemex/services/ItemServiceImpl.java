@@ -29,13 +29,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void updateItem(ItemDTO itemDTO) {
         Item item = itemRepository.findById(itemDTO.getId()).get();
-        item.builder()
-                .price(itemDTO.getPrice())
-                .itemSellStatus(itemDTO.getItemSellStatus())
-                .name(itemDTO.getName())
-                .itemDetail(itemDTO.getItemDetail())
-                .stockNumber(itemDTO.getStockNumber())
-                .build();
+        item.update(itemDTO.getName(), itemDTO.getPrice(), itemDTO.getStockNumber(), itemDTO.getItemDetail(), itemDTO.getItemSellStatus());
         itemRepository.save(item);
     }
 

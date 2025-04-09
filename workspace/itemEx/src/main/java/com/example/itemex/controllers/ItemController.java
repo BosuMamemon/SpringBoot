@@ -35,7 +35,7 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
-    @GetMapping("/read")
+    @GetMapping({"/read", "/modify"})
     public void getRead(@RequestParam("id") Long id, Model model) {
         ItemDTO itemDTO = itemService.readItem(id);
         model.addAttribute("itemDTO", itemDTO);
@@ -44,6 +44,12 @@ public class ItemController {
     @GetMapping("/delete")
     public String getDelete(@RequestParam("id") Long id) {
         itemService.deleteItem(id);
+        return "redirect:/item/list";
+    }
+
+    @PostMapping("/modify")
+    public String postModify(ItemDTO itemDTO) {
+        itemService.updateItem(itemDTO);
         return "redirect:/item/list";
     }
 }
