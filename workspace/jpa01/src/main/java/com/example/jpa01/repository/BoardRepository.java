@@ -9,6 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
-    @Query("SELECT b FROM Board b WHERE b.title LIKE CONCAT('%', :keyword, '%')")
-    Page<Board> searchTitle(String keyword, Pageable pageable);
+//    기존 방식
+//     @Query("SELECT b FROM Board b WHERE b.title LIKE CONCAT('%', :keyword, '%')")
+//    Page<Board> searchTitle(String keyword, Pageable pageable);
+
+//    JPQL 방식
+
 }

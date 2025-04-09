@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("bno");
-        Page<Board> result = boardRepository.searchTitle(pageRequestDTO.getKeyword(), pageable);
+        Page<Board> result = boardRepository.searchAll(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageable);
         List<BoardDTO> dtoList = result.getContent().stream().map(board -> entityToDto(board)).collect(Collectors.toList());
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)

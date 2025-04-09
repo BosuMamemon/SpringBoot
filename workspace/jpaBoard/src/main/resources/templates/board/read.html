@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}"
+      lang="en">
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h3>게시글 상세</h3></div>
+            <br>
+            <input type="hidden" class="form-control" name="bno" id="bno" th:value="${boardDTO.bno}">
+            <div class="input-group mb-3">
+                <span class="input-group-text">작성자</span>
+                <input type="text" class="form-control" name="author" id="author" th:value="${boardDTO.author}" readonly>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">제목</span>
+                <input type="text" class="form-control" name="title" id="title" th:value="${boardDTO.title}" readonly>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">작성일</span>
+                <input type="text" class="form-control" name="regdate" id="regdate" th:value="${boardDTO.regdate}" readonly>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">갱신일</span>
+                <input type="text" class="form-control" name="updatedate" id="updatedate" th:value="${boardDTO.updatetime}" readonly>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">조회수</span>
+                <input type="text" class="form-control" name="readcount" id="readcount" th:value="${boardDTO.readcount}" readonly>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">내용</span>
+                <textarea class="form-control" name="content" id="content" rows="3" readonly>[[${boardDTO.content}]]</textarea>
+            </div>
+            <div class="input-group mb-3" th:with="link=${pageRequestDTO.getLink()}">
+                <a th:href="|@{/board/modify(bno=${boardDTO.bno})}&${link}|"><button type="button" id="btnModify" class="btn btn-primary">수정</button></a>
+                <a th:href="@{/board/delete(bno=${boardDTO.bno})}"><button type="button" id="btnDelete" class="btn btn-danger">삭제</button></a>
+                <a th:href="|@{/board/list}?${link}|"><button type="button" id="btnList" class="btn btn-secondary">목록</button></a>
+            </div>
+        </div>
+    </div>
+</div>

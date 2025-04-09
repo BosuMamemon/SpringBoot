@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}"
+      lang="en">
+
+<div layout:fragment="content">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title"><h3>게시판 목록</h3></div>
+      <br>
+<!--      검색 -->
+      <div class="col">
+        <form action="/board/list" method="get">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+              <select class="form-select" name="type">
+                <option value="">---</option>
+                <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
+                <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
+                <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
+                <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목 + 내용</option>
+                <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목 + 내용 + 작성자</option>
+              </select>
+            </div>
+            <input type="text" name="keyword" th:value="${pageRequestDTO.keyword}">
+            <button type="submit" class="btn btn-secondary searchBtn">검색</button>
+          </div>
+        </form>
+      </div>
+<!--      테이블 -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Bno</th>
+            <th scope="col">Author</th>
+            <th scope="col">Title</th>
+            <th scope="col">RegDate</th>
+            <th scope="col">UpdateTime</th>
+            <th scope="col">ReadCount</th>
+          </tr>
+        </thead>
+        <tbody th:with="link=${pageRequestDTO.getLink()}">
+          <tr th:each="board:${pageResponseDTO.dtoList}">
+            <td>[[${board.bno}]]</td>
+            <td>[[${board.author}]]</td>
+            <td><a th:href="|@{/board/read(bno=${board.bno})}&${link}|" style="text-decoration: none; font-weight: bold">[[${board.title}]]</a></td>
+            <td>[[${board.regdate}]]</td>
+            <td>[[${board.updatetime}]]</td>
+            <td>[[${board.readcount}]]</td>
+          </tr>
+        </tbody>
+      </table>
+<!--      페이지네이션 -->
+      <nav class="col" aria-label="...">
+        <ul class="pagination">
+          <li class="page-item" th:if="${pageResponseDTO.prev}">
+            <a class="page-link" th:data-num="${pageResponseDTO.start - 1}">Previous</a>
+          </li>
+          <th:block th:each="i:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+            <li th:class="${pageResponseDTO.page == i}?'page-item active':'page-item'" aria-current="page">
+              <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+            </li>
+          </th:block>
+          <li class="page-item" th:if="${pageResponseDTO.next}">
+            <a class="page-link" th:data-num="${pageResponseDTO.end + 1}">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <a th:href="@{/board/register}"><button type="button" class="btn btn-primary">게시글 등록</button></a>
+    </div>
+  </div>
+</div>
+
+<!-- 스크립트 -->
+<script layout:fragment="script" th:inline="javascript">
+  document.querySelector(".pagination").addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let target = e.target;
+    if(target.tagName !== 'A') {
+      return;
+    }
+    let num = target.getAttribute("data-num");
+    let formObj = document.querySelector("form");
+    formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`;
+    formObj.submit();
+  })
+</script>

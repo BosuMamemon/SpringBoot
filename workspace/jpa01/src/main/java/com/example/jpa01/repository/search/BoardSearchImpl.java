@@ -17,14 +17,14 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     }
 
     @Override
-    public Page<Board> searchOne(Pageable pageable) {
+    public Page<Board> search1(Pageable pageable) {
         QBoard board = QBoard.board;
         JPQLQuery<Board> query = from(board);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.or(board.title.contains("11"));
-        booleanBuilder.or(board.content.contains("11"));
-        booleanBuilder.or(board.author.contains("11"));
+        booleanBuilder.or(board.title.contains("1"));
+        booleanBuilder.or(board.content.contains("1"));
         query.where(booleanBuilder);
+        query.where(board.bno.gt(0L));
         this.getQuerydsl().applyPagination(pageable, query);
         List<Board> list = query.fetch();
         long count = query.fetchCount();
@@ -32,7 +32,31 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     }
 
     @Override
-    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {
-        return null;
+    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable)
+    {
+        QBoard board = QBoard.board;
+        JPQLQuery<Board> query = from(board);
+
+        if((types != null && types.length > 0) && keyword != null) {
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            for(String type : types) {
+                switch(type) {
+                    case "t":
+                        booleanBuilder.or(board.title.contains(keyword)); break;
+                    case "c":
+                        booleanBuilder.or(board.content.contains(keyword)); break;
+                    case "w":
+                        booleanBuilder.or(board.author.contains(keyword)); break;
+
+                }
+            }
+            query.where(booleanBuilder);
+        }
+
+        query.where(board.bno.gt(0L));
+        this.getQuerydsl().applyPagination(pageable, query);
+        List<Board> list = query.fetch();
+        long count = query.fetchCount();
+        return new PageImpl<>(list, pageable, count);
     }
 }
