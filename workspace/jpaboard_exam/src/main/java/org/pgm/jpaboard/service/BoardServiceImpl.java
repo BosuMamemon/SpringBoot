@@ -6,11 +6,13 @@ import org.pgm.jpaboard.dto.BoardDTO;
 import org.pgm.jpaboard.dto.PageRequestDTO;
 import org.pgm.jpaboard.dto.PageResponseDTO;
 import org.pgm.jpaboard.repository.BoardRepository;
+import org.pgm.jpaboard.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,13 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Override
     public void registerBoard(BoardDTO boardDTO) {
         BoardEntity boardEntity = dtoToEntity(boardDTO);
+        log.info(boardEntity.getImageSet().size());
         boardRepository.save(boardEntity);
     }
 
@@ -51,8 +56,10 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.save(boardEntity);
     }
 
+    @Transactional
     @Override
     public void deleteBoard(Long bno) {
+        replyRepository.deleteByBoardEntity_Bno(bno);
         boardRepository.deleteById(bno);
     }
 

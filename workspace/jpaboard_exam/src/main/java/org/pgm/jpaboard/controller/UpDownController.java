@@ -34,12 +34,10 @@ public class UpDownController {
 
     @PostMapping(value = "/uploadPro", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void upload(UploadFileDTO uploadFileDTO, BoardDTO boardDTO, Model model) {
-        log.info("---" + uploadFileDTO);
         List<UploadResultDTO> list = new ArrayList<>();
         if(uploadFileDTO.getFiles() != null) {
             uploadFileDTO.getFiles().forEach(multipartFile -> {
                 String originalFileName = multipartFile.getOriginalFilename();
-                log.info(originalFileName);
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(uploadPath, uuid + "_" + originalFileName);
                 boolean imageFlag = false;
@@ -71,7 +69,6 @@ public class UpDownController {
     @GetMapping("/view/{filename}")
     public ResponseEntity<Resource> viewFileGet(@PathVariable("filename") String filename) {
         Resource resource = new FileSystemResource(uploadPath + File.separator + filename);
-        String resourceName = resource.getFilename();
         HttpHeaders headers = new HttpHeaders();
         try {
             headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
@@ -83,17 +80,16 @@ public class UpDownController {
 
     @GetMapping("/remove")
     public String removeFile(@RequestParam("filename") String filename) {
+//        Resource 객체를 만들어서 지우거나 File 객체를 만들어서 지우면 됨
         Resource resource = new FileSystemResource(uploadPath + File.separator + filename);
-        String resourceName = resource.getFilename();
         Map<String, Boolean> resultMap = new HashMap<>();
         boolean removedFlag = false;
         try {
             String contentType = Files.probeContentType(resource.getFile().toPath());
             removedFlag = resource.getFile().delete();
             if(contentType.startsWith("image")) {
-                String oFilename = filename.replace("s_", "");
-                File oFile = new File(uploadPath + File.separator + oFilename);
-                oFile.delete();
+                File oFile = new File(uploadPath + File.separator + "s_" + filename);
+                removedFlag = oFile.delete();
             }
         } catch (Exception e) {
             e.printStackTrace();

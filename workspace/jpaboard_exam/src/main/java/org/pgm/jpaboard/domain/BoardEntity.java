@@ -28,8 +28,9 @@ public class BoardEntity extends BaseEntity {
     private String author;
     private int readcount;
     @OneToMany(mappedBy = "boardEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default    // Builder로 생성할 때 얘는 디폴트로서 만들라는 뜻
-    @BatchSize(size = 20)   // HashSet의 기본 사이즈는 20이라는 뜻
+//    Cascade는 자식 테이블을 지우고, orphanRemoval은 고아 테이블을 지움
+    @Builder.Default    // Builder로 생성할 때 디폴트로 만든다는 뜻
+    @BatchSize(size = 20)   // Set의 기본 사이즈가 20이라는 뜻
     private Set<BoardImageEntity> imageSet = new HashSet<>();
 
     public void addImage(String uuid, String filename) {
@@ -40,6 +41,7 @@ public class BoardEntity extends BaseEntity {
                 .boardEntity(this)
                 .ord(imageSet.size())
                 .build();
+        imageSet.add(image);
     }
 
     public void removeImage() {

@@ -1,9 +1,6 @@
 package org.pgm.jpaboard.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +16,7 @@ public class BoardImageEntity implements Comparable<BoardImageEntity> {
     private String uuid;
     private String filename;
     private int ord;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bno")
     private BoardEntity boardEntity;
     

@@ -9,7 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> , BoardSearch {
-//    쿼리를 수행할 때 WHERE절과 관련된 attributePaths를 함께 검색한다는 의미
+//    attributePaths란? fetchType.LAZY일 때 fetch join을 수행할 테이블을 의미함.
+//    지연 로딩이란 쿼리문을 수행할 때 페치할 엔티티를 프록시로 복제해서 쿼리문을 순차대로 천천히 수행하는 것을 의미함
+//    즉시 로딩은 엔티티를 조인해서 쿼리문을 한꺼번에 수행하는 것을 의미함
+//    이렇게 하면 N+1 같은 충돌 문제를 피할 수 있다고 함
     @EntityGraph(attributePaths = {"imageSet"})
     @Query("SELECT b FROM BoardEntity b WHERE b.bno = :bno")
     Optional<BoardEntity> findByIdWithImages(Long bno);
