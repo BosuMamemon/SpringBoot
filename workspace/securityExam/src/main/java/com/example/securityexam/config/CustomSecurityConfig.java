@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @Log4j2
-@EnableWebSecurity
+@EnableWebSecurity  // 레거시의 security-context.xml 역할
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
     @Bean
